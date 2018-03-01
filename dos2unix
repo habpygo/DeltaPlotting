@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+
+=begin rdoc
+
+== d2u - convert msdos file to unix
+
+=== Synopsis
+	d2u file [file...]
+
+=== Description
+<i>d2u</i> replaces <return><linefeed> sequences with <linefeed>s. Also, if
+<return> is the only line separator (like this occurs in hp-unix data) these
+are replace with <linefeeds>. And finally, ^Z, ^Q and null characters are removed.
+
+=== Author
+Wybo Dekker (<tt>wybo@servalys.nl</tt>)
+
+=== Version
+# $Id: d2u,v 1.3 2005/06/06 21:01:09 wybo Exp $
+=end
+
+$-i = ''
+while gets
+  $_.gsub!(/[\C-z\C-q\C-@]/,'') # remove ^Z, ^Q and ^@
+  $_.sub!(/\C-m\n$/,"\n")  	 # remove ^M at EOL
+  $_.gsub!(/\r/,"\n")     	 # for some (hp-unix) data that have \r instead of \n
+  print
+end
+
